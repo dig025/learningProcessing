@@ -1,22 +1,25 @@
-class Balloon {
+class Ball {
   PVector pos;
   PVector vel;
   PVector acc;
+  float mass;
   
-  Balloon() {
+  Ball() {
     pos = new PVector(width/2, height/2);
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
+    mass = 1;
   }
   
   void applyForce(PVector force) {
-    acc.add(force);
+    PVector f = force.copy();
+    f.div(mass);
+    acc.add(f);
   }
   
   void move() {
     vel.add(acc);
     pos.add(vel);
-    vel.limit(8);
     
     acc.mult(0);
   }
@@ -32,12 +35,12 @@ class Balloon {
    }
    if(pos.y > height) {
      pos.y = height;
-     vel.y = vel.y * -.9; 
+     vel.y = vel.y * -1; 
    }
    
    if(pos.y < 0) {
      pos.y = 0;
-     vel.y = vel.y * -.9;
+     vel.y = vel.y * -1;
    }
   }
   
